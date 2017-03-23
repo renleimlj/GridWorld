@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project default="dist" name="Calc" basedir=".">
+    <target name="init" depends="clean">
+      <mkdir dir="build"/>
+       <javac srcdir="src" destdir="build" includeAntRuntime="false"/>
+    </target>
+ 
+    <target name="run" depends="init">
+      <java classname="Calc" fork="true">
+        <classpath>
+          <pathelement path="build"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="dist" depends="run">
+    	<jar destfile="build/package.jar" basedir="build">
+  		<manifest>
+    		<attribute name="Built-By" value="${user.name}"/>
+    		<attribute name="Main-class" value="package.Main"/>
+  		</manifest>
+  		</jar>
+  		<jar destfile="build/package-src.jar" basedir="src"/>
+  	</target>
+
+    <target name="clean">
+      <delete dir="build/"/>
+    </target>
+</project>
